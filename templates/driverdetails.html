@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>{{ driver[0] }} {{ driver[1] }}'s Run Details</h2>
+<h3>Car Model: {{ driver[2] }}, Drive Class: {{ driver[3] }}</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Course Name</th>
+            <th>Run Number</th>
+            <th>Seconds</th>
+            <th>Cones</th>
+            <th>WD</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for run in runs %}
+        <tr>
+            <td>{{ run[0] }}</td>
+            <td>{{ run[3] }}</td>
+            <td>{{ run[4] }}</td>
+            <td>{{ run[5] }}</td>
+            <td>{{ run[6] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
