@@ -1,12 +1,80 @@
 {% extends "base.html" %}
+
 {% block content %}
-<!-- driver_list is the variable passed in containing the list of drivers -->
-<!-- Add code to display a list of drivers -->
+<div class="container mt-4">
+    <div class="mb-3">
+        <a href="{{ url_for('home') }}" class="btn btn-secondary">Home</a>
+    </div>
+    <h2>List of Drivers</h2>
+    
+    <!-- Search filter -->
+    <div class="mb-3">
+        <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Search for names.." class="form-control">
+    </div>
 
-<h2>Driver List</h2>
+    <table class="table table-bordered" id="driversTable">
+        <thead>
+            <tr>
+                <th>Driver ID</th>
+                <th>Name</th> <!-- Combined column for First Name and Surname -->
+                <th>Date of Birth</th>
+                <th>Age</th>
+                <th>Car Model</th>
+                <th>Drive Class</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for driver in driver_list %}
+            <tr class="{{ 'table-warning' if driver[4] and driver[4] < 18 else '' }}">
+                <!-- Displaying the driver ID -->
+                <td>{{ driver[0] }}</td>
+                <!-- Name as a clickable link, combining first name and surname -->
+                <td><a href="{{ url_for('driverdetails', driver_id=driver[0]) }}">{{ driver[1] }}</a></td> 
+                <td><a href="{{ url_for('driverdetails', driver_id=driver[0]) }}">{{ driver[2] }}</a></td>
+                <td>{{ driver[3] }}</td>
+                <td>{{ driver[4] }}</td>
+                <td>{{ driver[5] }}</td>
+                <td>{{ driver[6] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
-<p>For the Milestone submission, this page just needs to display this text successfully in your browser.</p>
+    <!-- Pagination controls (example) -->
+    <nav aria-label="Page navigation">
+      <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+      </ul>
+    </nav>
 
-<p>Add the driver list here for your final submission.</p>
+    <!-- Script for the search filter -->
+    <script>
+        function filterTable() {
+          var input, filter, table, tr, td, i, j, visible;
+          input = document.getElementById("searchInput");
+          filter = input.value.toUpperCase();
+          table = document.getElementById("driversTable");
+          tr = table.getElementsByTagName("tr");
 
+          for (i = 1; i < tr.length; i++) {
+            visible = false;
+            td = tr[i].getElementsByTagName("td");
+            for (j = 0; j < td.length; j++) {
+              if (td[j] && td[j].innerText.toUpperCase().indexOf(filter) > -1) {
+                visible = true;
+              }
+            }
+            if (visible === true) {
+              tr[i].style.display = "";
+            } else {
+              tr[i].style.display = "none";
+            }
+          }
+        }
+    </script>
+
+</div>
 {% endblock %}
