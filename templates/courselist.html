@@ -4,7 +4,6 @@
 <h2>Course List</h2>
 <h3>current competition courses</h3>
 
-<!-- code to display list of courses-->
 <table>
     <tr>
         <th>Course</th>
@@ -13,9 +12,9 @@
     </tr>
     {% for course in course_list %}
         <tr>
-            {% for field in course %}
-                <td>{{field}}</td>
-            {% endfor %}
+            <td>{{course[0]}}</td>
+            <td>{{course[1]}}</td>
+            <td><img src="{{ url_for('static', filename=course[2]) }}" alt="{{course[1]}}" width="300"></td>
         </tr>
     {% endfor %}
 </table>
